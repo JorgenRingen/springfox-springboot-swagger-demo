@@ -7,6 +7,7 @@ import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
+import springfox.documentation.service.Tag;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -22,10 +23,11 @@ public class SwaggerConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
+                .tags(new Tag("Saker", "Endepunkter for å operere på saker"))
                 .protocols(Stream.of("http", "https").collect(Collectors.toSet()))
                 .forCodeGeneration(true)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("org.example.swaggerdemo.resource")) // @RestController's
+                .apis(RequestHandlerSelectors.basePackage("org.example.swaggerdemo.resource.sakerdemo")) // @RestController's
                 .paths(PathSelectors.any())
                 .build();
     }
