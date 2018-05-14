@@ -7,4 +7,4 @@ mvn clean install
 java -jar target/swaggerdemo-0.0.1-SNAPSHOT.jar
 ```
 
-Navigate to `http://localhost:8080/swagger-ui.htm` for SwaggerUI or `http://localhost:8080/v2/api-docs` to see the Swagger JSON representation.
+Navigate to `http://localhost:8080/swagger-ui.html` for SwaggerUI or `http://localhost:8080/v2/api-docs` to see the Swagger JSON representation.
