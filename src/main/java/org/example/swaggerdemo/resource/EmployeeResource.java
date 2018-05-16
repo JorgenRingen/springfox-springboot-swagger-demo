@@ -41,6 +41,9 @@ public class EmployeeResource {
     }
 
     @ApiOperation(value = "Find all employees", response = Employee.class, responseContainer = "List")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Returning list of employees"),
+    })
     @GetMapping
     public ResponseEntity<List<Employee>> findAll() {
         return ResponseEntity.ok(employeeRepository.findAll());
@@ -60,28 +63,7 @@ public class EmployeeResource {
         return employee.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @ApiOperation(value = "Update employee", response = Employee.class)
-    @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "id", value = "Employee id", paramType = "path")
-    })
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Employee updated"),
-            @ApiResponse(code = 404, message = "Employee not found")
-    })
-    @PutMapping("{id}")
-    public ResponseEntity put(@PathVariable final Long id, @RequestBody final Employee employee) {
-        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
-        if (optionalEmployee.isPresent()) {
-            Employee employeeToUpdate = optionalEmployee.get();
-            Employee updatedEmployee = employeeToUpdate.update(employee);
-            employeeRepository.save(updatedEmployee);
-            return ResponseEntity.ok(updatedEmployee);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @ApiOperation(value = "Create new employee")
+    @ApiOperation(value = "Create employee")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Employee was created"),
             @ApiResponse(code = 400, message = "Bad request")
@@ -93,13 +75,43 @@ public class EmployeeResource {
         return ResponseEntity.created(path).build();
     }
 
+    @ApiOperation(value = "Update employee")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "id", value = "Employee id", paramType = "path")
+    })
+    @ApiResponses(value = {
+            @ApiResponse(code = 204, message = "Employee updated"),
+            @ApiResponse(code = 404, message = "Employee not found")
+    })
+    @PutMapping("{id}")
+    public ResponseEntity put(@PathVariable final Long id, @RequestBody final Employee employee) {
+        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
+        if (optionalEmployee.isPresent()) {
+            Employee employeeToUpdate = optionalEmployee.get();
+            Employee updatedEmployee = employeeToUpdate.update(employee);
+            employeeRepository.save(updatedEmployee);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @ApiOperation(value = "Delete employee")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "id", value = "Employee id", paramType = "path")
     })
+    @ApiResponses(value = {
+            @ApiResponse(code = 204, message = "Employee deleted"),
+            @ApiResponse(code = 404, message = "Employee not found")
+    })
     @DeleteMapping("{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public void delete(@PathVariable final Long id) {
-        employeeRepository.deleteById(id);
+    public ResponseEntity delete(@PathVariable final Long id) {
+        Optional<Employee> employeeToDelete = employeeRepository.findById(id);
+        if (employeeToDelete.isPresent()) {
+            employeeRepository.deleteById(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

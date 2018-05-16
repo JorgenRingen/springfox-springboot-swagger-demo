@@ -22,16 +22,16 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String firstName;
-    private String lastName;
+    private String firstname;
+    private String lastname;
     private LocalDate dateOfBirth;
 
     public Employee update(Employee employee) {
         return Employee.builder()
                 .id(employee.getId())
                 .dateOfBirth(employee.dateOfBirth)
-                .firstName(employee.getFirstName())
-                .lastName(employee.getLastName())
+                .firstname(employee.getFirstname())
+                .lastname(employee.getLastname())
                 .build();
     }
 }

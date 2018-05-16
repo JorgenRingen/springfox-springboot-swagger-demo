@@ -43,27 +43,27 @@ public class SwaggerdemoApplication implements CommandLineRunner {
         List<Employee> savedEmployees = employeeRepository.saveAll(Arrays.asList(
                 Employee.builder()
                         .dateOfBirth(LocalDate.of(1954, Month.APRIL, 7))
-                        .firstName("Jackie")
-                        .lastName("Chan")
+                        .firstname("Jackie")
+                        .lastname("Chan")
                         .build(),
                 Employee.builder()
                         .dateOfBirth(LocalDate.of(1952, Month.JUNE, 7))
-                        .firstName("Liam")
-                        .lastName("Neeson")
+                        .firstname("Liam")
+                        .lastname("Neeson")
                         .build(),
                 Employee.builder()
                         .dateOfBirth(LocalDate.of(1946, Month.JULY, 6))
-                        .firstName("Sylvester")
-                        .lastName("Stallone")
+                        .firstname("Sylvester")
+                        .lastname("Stallone")
                         .build(),
                 Employee.builder()
                         .dateOfBirth(LocalDate.of(1955, Month.MARCH, 19))
-                        .firstName("Bruce")
-                        .lastName("Willis")
+                        .firstname("Bruce")
+                        .lastname("Willis")
                         .build()));
 
         Company company = Company.builder()
-                .name("Global Security Ag1ency")
+                .name("Global Security Agency")
                 .employees(new HashSet<>(savedEmployees))
                 .build();
 
